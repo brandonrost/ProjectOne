@@ -1,12 +1,45 @@
 <!DOCTYPE html>
-<html lang = "en">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login.css" />
     <title>GF Login</title>
 </head>
+
 <body>
-    
+    <header>
+        <nav id="navbar">
+            <div class="navContainer">
+                <img src="/images/TransparentGalacticFinance.png">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="">Reimbursements</a></li>
+                    <li><a href="">Profile</a></li>
+                    <li id="login" class="active"><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div>
+            <label for="uname"><b>Username</b></label><br>
+            <input type="text" placeholder="Enter Username" name="uname" id="username" required>
+        </div>
+        <div>
+            <label for="psw"><b>Password</b></label><br>
+            <input type="password" placeholder="Enter Password" name="psw" id="password" required>
+        </div>
+        <div>
+            <button type="button" id="submitButton">Login</button><br>
+            <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+        </div>
+    </div>
+    <script src="/js/login.js"></script>
 </body>
+
 </html>

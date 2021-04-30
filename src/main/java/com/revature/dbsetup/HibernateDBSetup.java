@@ -35,8 +35,8 @@ public class HibernateDBSetup {
 		ReimbursementType foodType = new ReimbursementType("Food");
 		ReimbursementType otherType = new ReimbursementType("Other");		
 		
-		session.save(financeManagerType);
 		session.save(employeeType); 
+		session.save(financeManagerType);
 		
 		session.save(pendingCode); 
 		session.save(acceptedCode);
@@ -51,8 +51,8 @@ public class HibernateDBSetup {
 		
 		Transaction tx2 = session.beginTransaction();
 		
-		User newEmployee = new User("username", "password","Bob","Burger","email@email.com", new UserType("Employee")); 
-		User newFinanceManager = new User("username1", "password","Jane","Doe", "email1@email.com", new UserType("Finance Manager"));
+		User newEmployee = new User("username", "password","Bob","Burger","email@email.com", session.get(UserType.class, 1)); 
+		User newFinanceManager = new User("username1", "password","Jane","Doe", "email1@email.com", session.get(UserType.class, 2));
 		
 		session.persist(newEmployee);
 		session.persist(newFinanceManager);

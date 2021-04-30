@@ -6,17 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galactic Finance</title>
     <link rel="stylesheet" href="css/index.css" />
+    <script src = "/js/index.js"></script>
 </head>
 <body>
     <header>
         <nav id ="navbar">
             <div class="container">
                 <img src="/images/TransparentGalacticFinance.png">
-                <ul>
-                    <li><a class = "active" href="index.html">Home</a></li>
+                <ul id = "navbarList">
+                    <li class = "active"><a href="index.html">Home</a></li>
                     <li><a href="">Reimbursements</a></li>
                     <li><a href="">Profile</a></li>
-                    <li><a href="">Login</a></li>
+                    <li id = "login"><a id = loginButton href="login.html">Login</a></li>
                 </ul>
             </div>
         </nav>
@@ -27,9 +28,9 @@
     </div>
     <div class = "registerAndSignupDiv">
         <label for = "register"><i>Click Here To Register!</i><br></label>
-        <a href="/register.html" class = "registerButton" name = "register", id = "register">Register</a><br>
+        <a href="/register.html" class = "registerButton" name = "registerButton", id = "registerButton">Register</a><br><br>
         <label for = "login"><i>Click Here To Login!</i><br></label>
-        <a href="/login.html" class = "loginButton" name = "login", id = "login">Login</a>
+        <a href="/login.html" class = "loginButton" name = "loginButton", id = "loginButton">Login</a>
     </div>
 </body>
 </html>

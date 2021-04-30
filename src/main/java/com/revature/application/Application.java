@@ -4,6 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.revature.controllers.Controller;
+import com.revature.controllers.ExceptionController;
+import com.revature.controllers.StaticFileController;
+import com.revature.controllers.UserController;
 import com.revature.dbsetup.HibernateDBSetup;
 
 import io.javalin.Javalin;
@@ -23,7 +26,7 @@ public class Application {
 		});
 		
 		
-		mapControllers(app);
+		mapControllers(app, new ExceptionController(), new UserController(), new StaticFileController());
 		
 		app.start(7000);
 		
