@@ -1,6 +1,5 @@
 package com.revature.models;
 
-import java.sql.Blob;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -10,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -42,7 +42,8 @@ public class Reimbursement {
 	private String reimb_desc; 
 	
 	@Column(name = "reimb_receipt")
-	private Blob reimb_receipt; 
+	@Lob
+	private byte[] reimb_receipt; 
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
 	private User reimb_author; 
@@ -120,11 +121,11 @@ public class Reimbursement {
 		this.reimb_desc = reimb_desc;
 	}
 
-	public Blob getReimb_receipt() {
+	public byte[] getReimb_receipt() {
 		return reimb_receipt;
 	}
 
-	public void setReimb_receipt(Blob reimb_receipt) {
+	public void setReimb_receipt(byte[] reimb_receipt) {
 		this.reimb_receipt = reimb_receipt;
 	}
 

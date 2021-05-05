@@ -1,26 +1,32 @@
-document.querySelector('#submitButton').addEventListener('click', login);
+document.querySelector('#registerButton').addEventListener('click', login);
 
 function login() {
     let un = document.querySelector('#username').value;
-    let pw = document.querySelector('#password').value;
+    let pw = document.querySelector('#psw').value;
+    let email = document.querySelector('#email').value;
+    let firstName = document.querySelector('#fName').value;
+    let lastName = document.querySelector('#fName').value;
 
     let data = {
         username: un,
-        password: pw
+        password: pw,
+        fName: firstName,
+        lName: lastName,
+        email: email
     };
 
     console.log(data)
 
-    fetch('http://localhost:7000/login', {
+    fetch('/register', {
         method: 'POST',
-        credentials: 'include',
+        credentials: 'include', 
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     }).then((response) => {
         if (response.status === 200) {
-            window.location.href = '/';
+            window.location.href = '/login.html';
         } else if (response.status === 401) {
             displayInvalidLogin();
         }
@@ -33,7 +39,7 @@ function displayInvalidLogin() {
     let pElement = document.createElement('p');
     pElement.style.color = 'red';
     pElement.innerHTML = 'Invalid login!<br>Please check your Username and Password and try again.';
-    pElement.style.textAlign = 'center';
+    pElement.style.textAlign = 'center';  
 
     passwordButton.appendChild(pElement);
 }

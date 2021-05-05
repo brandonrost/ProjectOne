@@ -64,6 +64,19 @@ public class UserController implements Controller {
 			messageDTO.setMessage("Could not register new user. User already exists.");
 		}
 	};
+	
+	private Handler registerFMHandler = (ctx) -> {
+		RegisterDTO registerDTO = ctx.bodyAsClass(RegisterDTO.class);
+		User user = userService.registerFM(registerDTO); 	
+		MessageDTO messageDTO = new MessageDTO(); 
+		
+		if(ctx.status() == 200) {
+			ctx.json(user); 
+			
+		}else {
+			messageDTO.setMessage("Could not register new user. User already exists.");
+		}
+	};
 
 	@Override
 	public void mapEndpoints(Javalin app) {
@@ -71,6 +84,7 @@ public class UserController implements Controller {
 		app.get("/current-user", currentUserHandler);
 		app.post("/logout", logoutHandler);
 		app.post("/register", registerHandler);
+		app.post("/register/fm", registerFMHandler);
 	}
 
 }

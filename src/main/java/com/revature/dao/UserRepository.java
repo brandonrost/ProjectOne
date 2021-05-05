@@ -56,4 +56,25 @@ public class UserRepository {
 		}		
 	}
 
+	public User registerFM(RegisterDTO registerDTO) {
+		try {
+			Transaction tx = session.beginTransaction(); 
+			User user = new User(
+					registerDTO.getUsername(), 
+					registerDTO.getPassword(),
+					registerDTO.getfName(), 
+					registerDTO.getlName(), 
+					registerDTO.getEmail(), 
+					session.get(UserType.class, 2)
+					); 
+			session.persist(user);
+			tx.commit();
+			
+			return user;
+			
+		} catch(NoResultException e) {
+			return null; 			
+		}
+	}
+
 }

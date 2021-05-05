@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.revature.exceptions.BadParameterException;
 import com.revature.exceptions.LoginException;
+import com.revature.exceptions.ReimbursementNotUpdatedException;
 
 import io.javalin.Javalin;
 import io.javalin.http.ExceptionHandler;
@@ -12,20 +13,26 @@ import io.javalin.http.ExceptionHandler;
 public class ExceptionController implements Controller {
 	private Logger logger = LoggerFactory.getLogger(ExceptionController.class);
 	
-	private ExceptionHandler<BadParameterException> badParameterException = (e, ctx) -> {
+	private ExceptionHandler<BadParameterException> badParameterExceptionHandler = (e, ctx) -> {
 		logger.warn(e.getMessage());
 		ctx.status(400);
 	};
 	
-	private ExceptionHandler<LoginException> loginException = (e, ctx) -> {
+	private ExceptionHandler<LoginException> loginExceptionHandler = (e, ctx) -> {
 		logger.warn(e.getMessage());
 		ctx.status(401); 
 	};
 
+	private ExceptionHandler<ReimbursementNotUpdatedException> reimbursementNotUpdatedExceptionHandler = (e, ctx) -> {
+		logger.warn(e.getMessage());
+		ctx.status(403); 
+	};
+	
 	@Override
 	public void mapEndpoints(Javalin app) {
-		app.exception(BadParameterException.class, badParameterException);
-		app.exception(LoginException.class, loginException); 
+		app.exception(BadParameterException.class, badParameterExceptionHandler);
+		app.exception(LoginException.class, loginExceptionHandler);
+		app.exception(ReimbursementNotUpdatedException.class, reimbursementNotUpdatedExceptionHandler); 
 	}
 
 }
