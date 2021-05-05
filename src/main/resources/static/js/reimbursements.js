@@ -2,6 +2,7 @@ window.onload = function () {
     let user = renderCurrentUser();
 };
 
+
 function renderCurrentUser() {
     fetch('http://localhost:7000/current-user', {
         method: 'GET',
@@ -16,7 +17,6 @@ function renderCurrentUser() {
             let navList = document.querySelector('#navbarList')
             let username = data.username;
             let fName = data.firstName;
-            let user_role = data.user_role.user_role_id;
 
             let userGreeting = document.createElement('li');
             userGreeting.setAttribute('id', 'userGreeting');
@@ -38,6 +38,7 @@ function renderCurrentUser() {
             loginNav.appendChild(button);
 
             renderTable(data);
+            return data;
         }
     })
 };
@@ -64,6 +65,25 @@ function renderTable(user) {
     let tbBody = document.querySelector("#tableBody");
 
     if (user.user_role.user_role_id == 1) {
+        let submitButton = document.querySelector("#submit");
+        submitButton.addEventListener("click", (event)=>{
+            addReimbursement(user)
+        });
+        let add_reimb_button = document.createElement("button");
+        add_reimb_button.innerHTML = "Add Reimbursement";
+        add_reimb_button.id = "add_button";
+        add_reimb_button.setAttribute("background-color", "#8458B3");
+        add_reimb_button.setAttribute("color", "#ccc")
+        add_reimb_button.setAttribute("width", "150px");
+        add_reimb_button.setAttribute("float", "right");
+        add_reimb_button.setAttribute("text-align", "center");
+        add_reimb_button.setAttribute("margin-bottom", "10px");
+        add_reimb_button.setAttribute("data-toggle", "modal");
+        add_reimb_button.setAttribute("data-target", "#myModal");
+        let tableDiv = document.querySelector("#tableDiv");
+
+        tableDiv.insertAdjacentElement("beforebegin", add_reimb_button);
+
         fetch('/reimbursements', {
             method: 'POST',
             credentials: 'include',
@@ -74,7 +94,12 @@ function renderTable(user) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log(data)
+            let action_header = document.createElement("th");
+            action_header.innerHTML = "Action";
+
+            let status_header = document.querySelector("#status");
+            status_header.insertAdjacentElement("afterend", action_header);
+
             let tableData = ""
             for (row of data) {
                 console.log(row)
@@ -94,18 +119,39 @@ function renderTable(user) {
                     <td>${reimb_description}</td>
                     <td>${reimb_receipt}</td>
                     <td>${reimb_author}</td>
-                    <td>${reimb_resolver}</td>
-                    <td>${reimb_status}</td>`)
+                    <td>${reimb_resolver}</td>`)
+                if (reimb_status == 2) {
+                    rowString = rowString.concat(`<td>Approved</td>`)
+                } else if (reimb_status == 3) {
+                    rowString = rowString.concat(`<td>Denied</td>`)
+                } else {
+                    rowString = rowString.concat(`<td>Pending</td>`)
+                }
+                if (reimb_status == 1) {
+                    rowString = rowString.concat(`
+                            <td><button type="button" class = "delete">X</button></td>
+                        `)
+                } else {
+                    rowString = rowString.concat(`
+                            <td> </td>
+                        `)
+                }
                 rowString = rowString.concat("</tr>")
                 tableData = tableData.concat(rowString)
                 console.log(tableData)
                 tbBody.innerHTML = tableData
+
+                let delete_buttons = document.getElementsByClassName("delete");
+                for (btn of delete_buttons) {
+                    btn.addEventListener('click', (event) => {
+                        deleteReimbursement(btn, user);
+                    })
+                };
             }
         })
     } else {
         let author_header = document.querySelector("#author")
         let resolver_header = document.querySelector("#resolver");
-        let table_headers = document.querySelector("#tableHeaders");
         let submitted_header = document.createElement("th");
         let resolved_header = document.createElement("th");
 
@@ -135,7 +181,7 @@ function renderTable(user) {
                 let reimb_amount = row.amount;
                 let reimb_submit_time = row.submitted;
                 let submitted = new Date(reimb_submit_time[0],
-                    (reimb_submit_time[1]-1),
+                    (reimb_submit_time[1] - 1),
                     reimb_submit_time[2],
                     reimb_submit_time[3],
                     reimb_submit_time[4],
@@ -144,7 +190,7 @@ function renderTable(user) {
                 let resolved = null;
                 if (reimb_resolve_time != null) {
                     resolved = new Date(reimb_resolve_time[0],
-                        (reimb_resolve_time[1]-1),
+                        (reimb_resolve_time[1] - 1),
                         reimb_resolve_time[2],
                         reimb_resolve_time[3],
                         reimb_resolve_time[4],
@@ -164,13 +210,151 @@ function renderTable(user) {
                     <td>${reimb_author}</td>
                     <td>${submitted}</td>
                     <td>${reimb_resolver}</td>
-                    <td>${resolved}</td>
-                    <td>${reimb_status}</td>`)
+                    <td>${resolved}</td>`);
+                if (reimb_status == 1) {
+                    rowString = rowString.concat(`<td>
+                        <button type = "button" class = "approve">\u2713</button>
+                        <button type = "button" class = "deny">X</button>
+                        </td>`);
+                } else if (reimb_status == 2) {
+                    rowString = rowString.concat(`<td>Approved</td>`);
+                } else {
+                    rowString = rowString.concat(`<td>Denied</td>`);
+                }
                 rowString = rowString.concat("</tr>")
                 tableData = tableData.concat(rowString)
-                console.log(tableData)
                 tbBody.innerHTML = tableData
+
+                approve_buttons = document.getElementsByClassName("approve");
+                deny_buttons = document.getElementsByClassName("deny");
+                for (btn of approve_buttons) {
+                    btn.addEventListener('click', (event) => {
+                        approveReimbursement(btn, user);
+                    })
+                };
+                for (btn of deny_buttons) {
+                    btn.addEventListener('click', (event) => {
+                        denyReimbursement(btn, user);
+                    })
+                };
             }
         })
     }
+}
+
+function approveReimbursement(btn, user) {
+    var td = btn.parentElement
+    var tr = td.parentNode
+    var reimb_id = tr.firstChild.innerHTML
+
+    console.log(user);
+
+    let data = {
+        id: Number(reimb_id),
+        status_id: 2,
+        resolver: user.userID
+    };
+
+    fetch('http://localhost:7000/reimbursements', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then((response) => {
+        if (response.status === 200) {
+            td.removeChild(btn)
+            td.innerHTML = "Accepted"
+        }
+    })
+    location.reload();
+}
+
+function denyReimbursement(btn, user) {
+    var td = btn.parentElement
+    var tr = td.parentNode
+    var reimb_id = tr.firstChild.innerHTML
+
+    let data = {
+        id: Number(reimb_id),
+        status_id: 3,
+        resolver: user.userID
+    };
+
+    fetch('http://localhost:7000/reimbursements', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then((response) => {
+        if (response.status === 200) {
+            td.removeChild(btn)
+            td.innerHTML = "Rejected"
+        }
+    })
+    location.reload();
+}
+
+function deleteReimbursement(btn, user) {
+    var td = btn.parentElement
+    var tr = td.parentNode
+    var reimb_id = tr.firstChild.innerHTML
+
+    let data = {
+        id: Number(reimb_id),
+        author: user.userID
+    };
+
+    fetch('http://localhost:7000/reimbursements', {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then((response) => {
+        if (response.status === 200) {
+            location.reload();
+        }
+    })
+}
+
+function addReimbursement(user) {
+    console.log(document.querySelector("#amount").value)
+
+    let reimb_amount = document.querySelector("#amount").value;
+    let reimb_type = document.querySelector("#type").value;
+    let reimb_description = null;
+    if(document.querySelector("#desc").value != null){
+        reimb_description = document.querySelector("#desc").value; 
+    }
+    let reimb_receipt = null; 
+    if(document.querySelector("#receipt").value != ""){
+        console.log(document.querySelector("#receipt").value)
+        reimb_receipt = document.querySelector("receipt").value;
+    }
+    let data = {
+        amount: reimb_amount,
+        type: reimb_type,
+        description: reimb_description,
+        receipt: reimb_receipt,
+        submitter: user.userID
+    }
+
+    fetch('http://localhost:7000/reimbursements/add', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then((response) => {
+        if (response.status === 200) {
+            location.reload();
+        }
+    })
+
 }

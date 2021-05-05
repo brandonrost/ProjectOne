@@ -28,12 +28,12 @@ function login() {
 }
 
 function displayInvalidLogin() {
-    let passwordButton = document.querySelector('#password');
+    let password = document.querySelector('#password');
 
     let pElement = document.createElement('p');
     pElement.style.color = 'red';
     pElement.innerHTML = 'Invalid login!<br>Please check your Username and Password and try again.';
     pElement.style.textAlign = 'center';
 
-    passwordButton.appendChild(pElement);
+    password.insertAdjacentElement("afterend",pElement);
 }

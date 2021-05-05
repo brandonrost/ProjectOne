@@ -13,34 +13,84 @@
 
 <body>
     <header>
-        <nav id ="navbar">
+        <nav id="navbar">
             <div class="container">
                 <img src="/images/TransparentGalacticFinance.png">
-                <ul id = "navbarList">
+                <ul id="navbarList">
                     <li><a href="index.html">Home</a></li>
-                    <li class = "active"><a href="/reimbursements.html">Reimbursements</a></li>
-                    <li id = "login"><a id = loginButton href="login.html">Login</a></li>
+                    <li class="active"><a href="/reimbursements.html">Reimbursements</a></li>
+                    <li id="login"><a id=loginButton href="login.html">Login</a></li>
                 </ul>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <table class="table table-hover">
+    <div class="container" id="tableDiv">
+        <table class="table table-hover" id="myTable">
             <thead>
-                <tr id ="tableHeaders">
+                <tr id="tableHeaders">
                     <th>ID</th>
-                    <th>Amount</th>
+                    <th onclick="sortTable(1)">Amount</th>
                     <th>Type</th>
                     <th>Description</th>
                     <th>Receipt</th>
-                    <th id = "author">Author</th>
-                    <th id = "resolver">Resolver</th>
-                    <th>Status</th>
+                    <th id="author">Author</th>
+                    <th id="resolver">Resolver</th>
+                    <th id="status" onclick="sortTable(9)">Status</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
             </tbody>
         </table>
+    </div>
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Reimbursement</h4>
+                    <button type="button" class="close" id="xbutton" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container" id="reimbForm">
+                        <div>
+                            <div class="col-sm-4"><label for="amount"><b>Amount:</b></label></div>
+                            <div class="col-sm-8"><input type="number" name="amount" id="amount" min="1" step="any"
+                                    required/></div>
+                        </div>
+                        <div>
+                            <div class="col-sm-4"><label for="type"><b>Reimbursement Type:</b></label></div>
+                            <div class="col-sm-8">
+                                <select name = "type" id ="type">
+                                    <option value = "Lodging">Lodging</option>
+                                    <option value = "Travel">Travel</option>
+                                    <option value = "Food">Food</option>
+                                    <option value = "Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-sm-4"><label for="description"><b>Email:</b></label></div>
+                            <div class="col-sm-8"><input type="text" placeholder="Description of the reimbursement in question" name="desc" id="desc"></div>
+                        </div>
+                        <div>
+                            <div class="col-sm-4"><label for="receipt"><b>Receipt:</b></label></div>
+                            <div class="col-sm-8"><input type="file" name="receipt" id="receipt"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id = "submit">Submit</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <script src="/js/reimbursements.js"></script>
@@ -53,6 +103,62 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+        <script>
+            function sortTable(n) {
+              var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+              table = document.getElementById("myTable");
+              switching = true;
+              // Set the sorting direction to ascending:
+              dir = "asc";
+              /* Make a loop that will continue until
+              no switching has been done: */
+              while (switching) {
+                // Start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /* Loop through all table rows (except the
+                first, which contains table headers): */
+                for (i = 1; i < (rows.length - 1); i++) {
+                  // Start by saying there should be no switching:
+                  shouldSwitch = false;
+                  /* Get the two elements you want to compare,
+                  one from current row and one from the next: */
+                  x = rows[i].getElementsByTagName("TD")[n];
+                  y = rows[i + 1].getElementsByTagName("TD")[n];
+                  /* Check if the two rows should switch place,
+                  based on the direction, asc or desc: */
+                  if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                      // If so, mark as a switch and break the loop:
+                      shouldSwitch = true;
+                      break;
+                    }
+                  } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                      // If so, mark as a switch and break the loop:
+                      shouldSwitch = true;
+                      break;
+                    }
+                  }
+                }
+                if (shouldSwitch) {
+                  /* If a switch has been marked, make the switch
+                  and mark that a switch has been done: */
+                  rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                  switching = true;
+                  // Each time a switch is done, increase this count by 1:
+                  switchcount ++;
+                } else {
+                  /* If no switching has been done AND the direction is "asc",
+                  set the direction to "desc" and run the while loop again. */
+                  if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                  }
+                }
+              }
+            }
+            </script>
 </body>
 
 </html>

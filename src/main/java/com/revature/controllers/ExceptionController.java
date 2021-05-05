@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.revature.exceptions.BadParameterException;
 import com.revature.exceptions.LoginException;
+import com.revature.exceptions.ReimbursementNotDeletedException;
 import com.revature.exceptions.ReimbursementNotUpdatedException;
 
 import io.javalin.Javalin;
@@ -28,11 +29,17 @@ public class ExceptionController implements Controller {
 		ctx.status(403); 
 	};
 	
+	private ExceptionHandler<ReimbursementNotDeletedException> reimbursementNotDeletedExceptionHandler = (e, ctx) -> {
+		logger.warn(e.getMessage());
+		ctx.status(402); 
+	};
+	
 	@Override
 	public void mapEndpoints(Javalin app) {
 		app.exception(BadParameterException.class, badParameterExceptionHandler);
 		app.exception(LoginException.class, loginExceptionHandler);
 		app.exception(ReimbursementNotUpdatedException.class, reimbursementNotUpdatedExceptionHandler); 
+		app.exception(ReimbursementNotDeletedException.class, reimbursementNotDeletedExceptionHandler);
 	}
 
 }

@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import com.revature.dao.ReimbursementRepository;
 import com.revature.dto.FMReimbursementDTO;
-import com.revature.dto.ReimbursementDTO;
+import com.revature.dto.ReimbursementActionDTO;
+import com.revature.dto.addReimbursementDTO;
+import com.revature.dto.deleteReimbursementDTO;
+import com.revature.exceptions.ReimbursementNotDeletedException;
 import com.revature.exceptions.ReimbursementNotUpdatedException;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
@@ -32,11 +35,27 @@ public class ReimbursementService {
 		return reimbursements; 
 	}
 
-	public static Reimbursement updateReimbursementStatus(ReimbursementDTO reimbToBeUpdated) throws ReimbursementNotUpdatedException {
+	public static Reimbursement updateReimbursementStatus(ReimbursementActionDTO reimbToBeUpdated) throws ReimbursementNotUpdatedException {
 		Reimbursement reimbursement = reimbRepo.updateReimbursementStatus(reimbToBeUpdated); 
 		if(reimbursement == null) {
 			throw new ReimbursementNotUpdatedException("Could not update reimbursement in the database.");
 		}
 		return reimbursement; 
+	}
+
+	public static Reimbursement deleteReimbursement(deleteReimbursementDTO reimbToBeDeleted) throws ReimbursementNotDeletedException {
+		Reimbursement reimbursement = reimbRepo.deleteReimbursement(reimbToBeDeleted);
+		if(reimbursement == null) {
+			throw new ReimbursementNotDeletedException("Could not delete reimbursement from the database.");
+		}
+		return reimbursement; 
+	}
+
+	public static Reimbursement addReimbursement(addReimbursementDTO reimbToBeAdded) {
+		if(reimbToBeAdded.getAmount() != 0 && reimbToBeAdded.getType()!=null) {
+			Reimbursement reimbursement = reimbRepo.addReimbursement(reimbToBeAdded); 
+			return reimbursement; 
+		}
+		return null; 
 	}
 }

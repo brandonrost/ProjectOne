@@ -32,11 +32,16 @@ body {
 
 div.container table{
     text-align: center;
-    color: #a28089;
+    color: #8458B3;
     background-color: rgba(224, 179, 228, 0.384);
 }
 
-table td + td { border-left:2px rgb(128,75,133); }
+div.container table td + td { border-left:2px rgb(128,75,133);}
+
+.modal-footer #submit {
+    float: left;
+}
+
 
 @media only screen and (max-width: 600px) {
     #navbar {

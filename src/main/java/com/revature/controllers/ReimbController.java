@@ -7,7 +7,10 @@ import org.slf4j.LoggerFactory;
 
 import com.revature.dto.FMReimbursementDTO;
 import com.revature.dto.MessageDTO;
+import com.revature.dto.ReimbursementActionDTO;
 import com.revature.dto.ReimbursementDTO;
+import com.revature.dto.addReimbursementDTO;
+import com.revature.dto.deleteReimbursementDTO;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import com.revature.service.ReimbursementService;
@@ -39,9 +42,9 @@ public class ReimbController implements Controller {
 		}
 	};
 	
-	private Handler updateReimbHandler = ctx -> {
+	private Handler updateStatusReimbHandler = ctx -> {
 		logger.info("Now submitting PUT request to Reimbursement Handler");	
-		ReimbursementDTO reimbToBeUpdated = ctx.bodyAsClass(ReimbursementDTO.class); 
+		ReimbursementActionDTO reimbToBeUpdated = ctx.bodyAsClass(ReimbursementActionDTO.class); 
 		Reimbursement reimbursement = ReimbursementService.updateReimbursementStatus(reimbToBeUpdated); 
 		
 		if (reimbursement == null) {
@@ -51,16 +54,48 @@ public class ReimbController implements Controller {
 			ctx.status(403);
 		} else {
 			ctx.json(reimbursement);
+			ctx.status(200);
 		}
 	};
-
+	
+	private Handler deleteReimbursementHandler = ctx -> {
+		logger.info("Now submitting Delete request to Reimbursement Handler");	
+		deleteReimbursementDTO reimbToBeDeleted = ctx.bodyAsClass(deleteReimbursementDTO.class);
+		Reimbursement reimbursement = ReimbursementService.deleteReimbursement(reimbToBeDeleted); 
+		
+		if (reimbursement == null) {
+			MessageDTO messageDTO = new MessageDTO();
+			messageDTO.setMessage("Unable to update reimbursement on the database.");
+			ctx.json(messageDTO);
+			ctx.status(403);
+		} else {
+			ctx.json(reimbursement);
+			ctx.status(200);
+		}
+	};
+	
+	private Handler addReimbursementHandler = ctx -> {
+		logger.info("Now submitting POST request to Reimbursement Handler");	
+		addReimbursementDTO reimbToBeAdded = ctx.bodyAsClass(addReimbursementDTO.class);
+		Reimbursement reimbursement = ReimbursementService.addReimbursement(reimbToBeAdded); 
+		
+		if (reimbursement == null) {
+			MessageDTO messageDTO = new MessageDTO();
+			messageDTO.setMessage("Unable to update reimbursement on the database.");
+			ctx.json(messageDTO);
+			ctx.status(403);
+		} else {
+			ctx.json(reimbursement);
+			ctx.status(200);
+		}
+	};
 
 	@Override
 	public void mapEndpoints(Javalin app) {
 		app.post("/reimbursements", reimbHandler);
-		app.put("/reimbursements", updateReimbHandler); 
-		//app.post("reimbursements/add", addReimbHandler);
-		//app.post("reimbursements/remove", removeReimbHandler);
+		app.put("/reimbursements", updateStatusReimbHandler); 
+		app.delete("reimbursements", deleteReimbursementHandler); 
+		app.post("reimbursements/add", addReimbursementHandler);
 	}
 
 }
