@@ -42,6 +42,40 @@ div.container table td + td { border-left:2px rgb(128,75,133);}
     float: left;
 }
 
+#add_button {
+    float: right;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 25px;
+    background-color: rgba(224, 179, 228, 0.384);
+    color: #8458B3; 
+}
+
+.approve {
+    background-color: green;
+    color: white;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+
+.deny{
+    background-color: red;
+    color: black;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+
+.delete{
+    background-color: red;
+    color: black;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+}
 
 @media only screen and (max-width: 600px) {
     #navbar {

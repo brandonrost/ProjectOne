@@ -56,6 +56,7 @@ function logout() {
             userGreeting.remove();
             let loginNav = document.querySelector('#login')
             loginNav.innerHTML = `<a href="/login.html">Login</a>`;
+            window.location.href = '/';
         }
         location.reload();
     })
@@ -129,7 +130,7 @@ function renderTable(user) {
                 }
                 if (reimb_status == 1) {
                     rowString = rowString.concat(`
-                            <td><button type="button" class = "delete">X</button></td>
+                            <td><button type="button" class = "delete">-</button></td>
                         `)
                 } else {
                     rowString = rowString.concat(`
