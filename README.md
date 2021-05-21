@@ -19,6 +19,7 @@ The Expense Reimbursement System (ERS) will manage the process of reimbursing em
 * Spring Tool Suites - version 4.10 (for creating/editing Java-based backend application)
 * Visual Studio Code - version 1.55 (for creating/editing HTML, CSS, and JavaScript files)
 * Postman - version 8.5.1 (for testing HTTP requests sent to RESTful API on the backend)
+* DBWeaver - version 21.0.5 (for viewing database)
 * GitHub/GitBash - used for version-controll
 * SYSTEM: Windows 10
 
