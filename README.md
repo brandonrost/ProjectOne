@@ -86,51 +86,51 @@ You can clone this repository with git clone <url> and utilize it for your own n
   
 > Users should utilize this application as a bare-bones reimbursement system that may be used to track and change current and past reimbursements that Employees have submitted, and Finance Managers have the ability to change. The users (employees and finance managers, alike) should use this application to register, login, and view current and past reimbursements. Below are some pictures to help you get started. 
 > 
-> **Landing Page/Home Sceen**
+> ### **Landing Page/Home Sceen**
 > 
 > ![image](https://user-images.githubusercontent.com/81986564/119172684-3f6b6280-ba34-11eb-90d1-742994b71526.png)
 >
-> **Click Register**
+> ### **Click Register**
 >
 > ![register button](https://user-images.githubusercontent.com/81986564/119173738-a8070f00-ba35-11eb-9633-e685df35db17.png)
 > 
-> **Register As An Employee** --> fill out the form to register as a new user
+> ### **Register As An Employee** --> fill out the form to register as a new user
 >
 > ![register screen](https://user-images.githubusercontent.com/81986564/119174283-632fa800-ba36-11eb-8a81-34d8505ad7bb.png)
 > 
-> **Login To Account ** - automatically redirected to sign-in page
+> ### **Login To Account ** - automatically redirected to sign-in page
 > 
 > ![image](https://user-images.githubusercontent.com/81986564/119174551-b6095f80-ba36-11eb-8469-b1795bb4f074.png)
 >
-> **Navigate to the Reimbursements Page** - utilize the navigation tabs
+> ### **Navigate to the Reimbursements Page** - utilize the navigation tabs
 >
 > ![reimb page](https://user-images.githubusercontent.com/81986564/119175361-b7875780-ba37-11eb-9ddf-8aa2d66d410d.png)
 >
-> **Add Some Reimbursements**
+> ### **Add Some Reimbursements**
 >
 > ![add reimb](https://user-images.githubusercontent.com/81986564/119175409-cc63eb00-ba37-11eb-86b9-4c97f1b5e516.png)
 > ![add reimb model](https://user-images.githubusercontent.com/81986564/119175454-d8e84380-ba37-11eb-8099-7b52a6492973.png)
 >
-> **Logout**
+> ### **Logout**
 >
 > ![logout](https://user-images.githubusercontent.com/81986564/119180530-662e9680-ba3e-11eb-9458-634fc260ada3.png)
 >
-> **Register As Finance Manager** - provided the link to this page, not accessible from application. Follow the same login steps as an Employee
+> ### **Register As Finance Manager** - provided the link to this page, not accessible from application. Follow the same login steps as an Employee
 >
 > ![image](https://user-images.githubusercontent.com/81986564/119180325-2798dc00-ba3e-11eb-9ac5-1bc87e64d7e0.png)
 > * **Note:** `/registerFM.html` must be after the root directory in order to register as a Finance Manager - not an Employee
 >
-> **Navigate to Reimbursements Page** - utilize the navigation bar
+> ### **Navigate to Reimbursements Page** - utilize the navigation bar
 >
 > ![fm reimb page](https://user-images.githubusercontent.com/81986564/119183023-83189900-ba41-11eb-993f-b4ed6f1a9822.png)
 > **NOTE:** The Finance Manager has sorting functionality, approve and deny abilities, and has access to more information than an Emplpoyee
 >
 > See Below:
-> **General Overview of Finance Manager Reimbursement Page**
+> ####**General Overview of Finance Manager Reimbursement Page**
 > 
 > ![fm_reimb_diagram](https://user-images.githubusercontent.com/81986564/119183583-46996d00-ba42-11eb-898c-a8696a5e612f.png)
 >
-> **Filtering**
+> #### **Filtering**
 > 
 > |Before|After|
 > |------|-----|
