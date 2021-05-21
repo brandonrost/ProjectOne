@@ -55,24 +55,32 @@ To-Do List:
 * Add functionality to allow Finance Managers to view photos that were uploaded with a reimbursement
 * Add Selenium tests
 * Redirect the user to the login page if they attempt to access 'reimbursements' while not logged in
+* Deploy as an EC2 instance on AWS
+* Deploy database onto AWS
 
 Appearance To-Do List: 
 * Add more dynamic layout to the home-page
 * Fix color scheme to be more appealing
 
 ## Getting Started
+You can clone this repository with git clone <url> and utilize it for your own needs. For example, if you want to clone this repository do the following commands:
+  
+  
+> `$ git clone https://github.com/brandonrost/ProjectOne.git`
+> 
+> This creates a directory named ProjectOne, initializes a .git directory inside it, pulls down all the data for that repository, and checks out a working copy of the latest version. If you go into the new ProjectOne directory that was just created, you’ll see the project files in there, ready to be worked on or used.
+
+> If you want to clone the repository into a directory named something other than ProjectOne, you can specify the new directory name as an additional argument:
+> 
+> `$ git clone  https://github.com/brandonrost/ProjectOne.git newProject`
+> 
+> That command does the same thing as the previous one, but the target directory is called newProject.
    
-(include git clone command)
-(include all environment setup steps)
-
-> Be sure to include BOTH Windows and Unix command  
-> Be sure to mention if the commands only work on a specific platform (eg. AWS, GCP)
-
-- All the `code` required to get started
-- Images of what it should look like
-
 ## Usage
+  
+> Users should utilize this application as a bare-bones reimbursement system that may be used to track and change current and past reimbursements that Employees have submitted, and Finance Managers have the ability to change. The users (employees and finance managers, alike) should use this application to register, login, and view current and past reimbursements. Below are some pictures to help you get started. 
+> 
+> Format: ![Landing Page](![image](https://user-images.githubusercontent.com/81986564/119172684-3f6b6280-ba34-11eb-90d1-742994b71526.png)
 
-> Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
 
 
